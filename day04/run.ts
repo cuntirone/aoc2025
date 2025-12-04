@@ -10,6 +10,7 @@ const run = (input: string) => {
   }
   grid.push(new Array(grid[0].length).fill("."));
 
+  // score for each cell can be 1 if the score contains a roll, plus 0-8 if any of the adjecent cells has a roll
   const simpleScores: number[][] = [];
   for (let row = 0; row < bounds; row++) {
     simpleScores.push(new Array(bounds).fill(0));
@@ -24,7 +25,13 @@ const run = (input: string) => {
       if (grid[row][col] === ".") {
         continue;
       }
+      /*
+        only look "forward" as we go thru each cell to avoid double counting
+           @ ->
+        /  |  \
 
+        mark both current cell and adjecent cell in one pass
+      */
       if (grid[row][col + 1] === "@") {
         simpleScores[row][col]++;
         simpleScores[row][col + 1]++;
