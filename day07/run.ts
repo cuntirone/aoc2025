@@ -7,6 +7,7 @@ const run = (input: string) => {
 
   let score1 = 0;
 
+  // the score for each beam (part 2) is how many ways you can get to that beam from S
   const beamScores: Map<number, number> = new Map;
   for (let i = 0; i < manifold.length; i++) {
     const level = manifold[i];
@@ -18,6 +19,7 @@ const run = (input: string) => {
     for (const beam of beamScores.keys()) {
       if (level[beam] === "^") {
         score1++;
+        // the score for each beam is the sum of its two potential predecessors
         if (beam > 0) {
           beamScores.set(beam-1, (beamScores.get(beam-1) || 0) + (beamScores.get(beam) || 0));
         }
